@@ -7,6 +7,7 @@ class vertex:
 
 
 time = 0
+dag = []
 
 
 def dfs(G):
@@ -19,12 +20,14 @@ def dfs(G):
 
 def dfsVisit(G, u, V):
     global time
+    global dag
     time += 1
     V[u].d = time
     V[u].visited = True
     for e in G[u]:
         if not V[e].visited:
             V[e].parent = u
-            dfsVisit(G, e, V)
+            dfsVisit(G, u, V)
     time += 1
     V[u].f = time
+    dag.append(u)

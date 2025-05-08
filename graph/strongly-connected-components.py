@@ -1,3 +1,18 @@
+time = 0
+dag = []
+
+
+def scc(G):
+    global dag
+    dfs(G)
+    GT = [[] for _ in range(len(G))]
+    for i in range(len(G)):
+        for edge in G[i]:
+            GT[edge].append(i)
+    order = dag[:]
+    dfsMod(GT, order)
+
+
 class vertex:
     def __init__(self):
         self.parent = None
@@ -6,7 +21,14 @@ class vertex:
         self.visited = False
 
 
-time = 0
+def dfsMod(G, order):
+    V = [vertex() for _ in range(len(G))]
+    scverteces = []
+    for i in order:
+        if not V[i].visited:
+            scverteces.append(i)
+            dfsVisit(G, i, V)
+    return V
 
 
 def dfs(G):
@@ -14,11 +36,11 @@ def dfs(G):
     for e in range(len(G)):
         if not V[e].visited:
             dfsVisit(G, e, V)
-    return
 
 
 def dfsVisit(G, u, V):
     global time
+    global dag
     time += 1
     V[u].d = time
     V[u].visited = True
@@ -28,3 +50,8 @@ def dfsVisit(G, u, V):
             dfsVisit(G, e, V)
     time += 1
     V[u].f = time
+    dag.append(u)
+
+
+g = [[1, 2], [0], [3], [4], [2], [6], [5]]
+scc(g)
