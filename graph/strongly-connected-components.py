@@ -10,7 +10,7 @@ def scc(G):
         for edge in G[i]:
             GT[edge].append(i)
     order = dag[:]
-    dfsMod(GT, order)
+    return dfsMod(GT, order)
 
 
 class vertex:
@@ -28,7 +28,7 @@ def dfsMod(G, order):
         if not V[i].visited:
             scverteces.append(i)
             dfsVisit(G, i, V)
-    return V
+    return scverteces
 
 
 def dfs(G):
